@@ -92,16 +92,15 @@ application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_m
 
 # Flask route for handling Telegram webhooks
 @app.route(f"/{bot_token}", methods=['POST'])
-def telegram_webhook():
+async def telegram_webhook():
     json_update = request.get_json()
     print(f"Received update: {json_update}")
     update = Update.de_json(json_update, application.bot)
 
     # Process the update in the background asynchronously
-    application.create_task(application.process_update(update))
+    await application.process_update(update)
 
     return 'OK', 200
-
 
 
 # Function to set up webhook
