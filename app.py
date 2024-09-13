@@ -91,23 +91,27 @@ application.add_handler(CommandHandler("start", start))
 application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
 
+# Flask route for handling Telegram webhooks
 @app.route(f"/{bot_token}", methods=['POST'])
 def telegram_webhook():
-    data = request.get_json()
-    update = Update.de_json(data, application.bot)
-    handler = WebhookHandler(update, application)
-    handler.handle_update()
+    json_update = request.get_json()
+    update = Update.de_json(json_update, application.bot)
+    application.update_queue.put(update)
     return 'OK', 200
 
 
 # Function to set up webhook
 def set_webhook():
+    webhook_url = os.getenv('WEBHOOK_URL')
+    if not webhook_url:
+        raise ValueError("WEBHOOK_URL environment variable not set")
+
     url = f"https://api.telegram.org/bot{bot_token}/setWebhook"
     response = requests.post(url, json={"url": f"{webhook_url}/{bot_token}"})
     if response.status_code == 200:
         print("Webhook set successfully!")
     else:
-        print("Failed to set webhook")
+        print(f"Failed to set webhook: {response.text}")
 
 
 if __name__ == "__main__":
