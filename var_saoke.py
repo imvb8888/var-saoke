@@ -12,8 +12,13 @@ logging.basicConfig(level=logging.WARNING)
 
 # Hardcoded CSV file path and bot token
 csv_file = "saoke_vietinbank.csv"  # Make sure to upload this to your deployment
-bot_token = '7545966806:AAEUhIQp8MWqnhjZ97SJ3t639RJ51q3OjGQ'
-webhook_url = "https://yourapp.onrender.com"  # Update with your actual URL
+
+bot_token = os.getenv('BOT_TOKEN')
+
+if not bot_token:
+    raise ValueError("Bot token not set. Please set the 'BOT_TOKEN' environment variable.")
+
+# webhook_url = "https://yourapp.onrender.com"  # Update with your actual URL
 
 # Load the CSV file into a pandas DataFrame
 df = pd.read_csv(csv_file)
@@ -96,13 +101,13 @@ def telegram_webhook():
 
 
 # Function to set up webhook
-def set_webhook():
-    url = f"https://api.telegram.org/bot{bot_token}/setWebhook"
-    response = requests.post(url, json={"url": f"{webhook_url}/{bot_token}"})
-    if response.status_code == 200:
-        print("Webhook set successfully!")
-    else:
-        print("Failed to set webhook")
+# def set_webhook():
+#     url = f"https://api.telegram.org/bot{bot_token}/setWebhook"
+#     response = requests.post(url, json={"url": f"{webhook_url}/{bot_token}"})
+#     if response.status_code == 200:
+#         print("Webhook set successfully!")
+#     else:
+#         print("Failed to set webhook")
 
 
 if __name__ == "__main__":
