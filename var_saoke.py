@@ -18,7 +18,7 @@ bot_token = os.getenv('BOT_TOKEN')
 if not bot_token:
     raise ValueError("Bot token not set. Please set the 'BOT_TOKEN' environment variable.")
 
-# webhook_url = "https://yourapp.onrender.com"  # Update with your actual URL
+webhook_url = "https://var-saoke.onrender.com"  # Update with your actual URL
 
 # Load the CSV file into a pandas DataFrame
 df = pd.read_csv(csv_file)
@@ -101,15 +101,15 @@ def telegram_webhook():
 
 
 # Function to set up webhook
-# def set_webhook():
-#     url = f"https://api.telegram.org/bot{bot_token}/setWebhook"
-#     response = requests.post(url, json={"url": f"{webhook_url}/{bot_token}"})
-#     if response.status_code == 200:
-#         print("Webhook set successfully!")
-#     else:
-#         print("Failed to set webhook")
+def set_webhook():
+    url = f"https://api.telegram.org/bot{bot_token}/setWebhook"
+    response = requests.post(url, json={"url": f"{webhook_url}/{bot_token}"})
+    if response.status_code == 200:
+        print("Webhook set successfully!")
+    else:
+        print("Failed to set webhook")
 
 
 if __name__ == "__main__":
-    # set_webhook()  # Set the webhook when starting the server
+    set_webhook()  # Set the webhook when starting the server
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
