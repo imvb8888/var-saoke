@@ -5,7 +5,6 @@ import requests
 from flask import Flask, request
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
-from telegram.ext.webhookhandler import WebhookHandler
 
 # Set up logging
 logging.basicConfig(level=logging.WARNING)
