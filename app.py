@@ -86,6 +86,7 @@ async def handle_message(update: Update, context):
 
 # Create and configure Application
 application = Application.builder().token(bot_token).build()
+application.initialize()
 application.add_handler(CommandHandler("start", start))
 application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
