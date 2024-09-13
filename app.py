@@ -17,7 +17,7 @@ bot_token = os.getenv('BOT_TOKEN')
 if not bot_token:
     raise ValueError("Bot token not set. Please set the 'BOT_TOKEN' environment variable.")
 
-webhook_url = "https://var-saoke.onrender.com"  # Update with your actual URL
+# webhook_url = "https://var-saoke.onrender.com"  # Update with your actual URL
 
 # Load the CSV file into a pandas DataFrame
 df = pd.read_csv(csv_file)
@@ -94,6 +94,8 @@ application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_m
 @app.route(f"/{bot_token}", methods=['POST'])
 def telegram_webhook():
     json_update = request.get_json()
+    # Print the incoming update
+    print(f"Received update: {json_update}")
     update = Update.de_json(json_update, application.bot)
     application.update_queue.put(update)
     return 'OK', 200
