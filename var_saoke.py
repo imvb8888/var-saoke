@@ -111,5 +111,5 @@ def telegram_webhook():
 
 
 if __name__ == "__main__":
-    set_webhook()  # Set the webhook when starting the server
+    # set_webhook()  # Set the webhook when starting the server
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
